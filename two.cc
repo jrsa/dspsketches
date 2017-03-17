@@ -9,17 +9,20 @@ public:
     _buf = new SAMPTYPE[sz];
     memset(_buf, 0, sz * sizeof(SAMPTYPE));
   }
-
   SAMPTYPE out(float pos) {
     int idx = (int) pos;
     int bufidx = i - idx;
-    if(bufidx < 0) bufidx += sz;
+
+    if(bufidx < 0) {
+      bufidx += sz;
+    }
     SAMPTYPE out = _buf[bufidx];
     return out;
   }
 
   void in(SAMPTYPE in0) {
-    _buf[++i % sz] = in0;
+    i = (i + 1) % sz;
+    _buf[i] = in0;
   }   
 
 private:
